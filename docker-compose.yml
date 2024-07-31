@@ -1,0 +1,43 @@
+version: '3.4'
+
+networks:
+  backend:
+
+services:
+  onlineshopwebapi:
+    container_name: onlineshop-webapi
+    image: ${DOCKER_REGISTRY-}onlineshopwebapi
+    ports:
+      - 5001:80
+    build:
+      context: .
+      dockerfile: src/OnlineShop.WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - MONGODB_CONNECTIONSTRING=mongodb://onlineshopmongodb:27017
+    depends_on:
+      - onlineshopmongodb
+    networks:
+      - backend
+
+  onlineshopmongodb:
+    container_name: onlineshop-mongodb
+    image: mongo:6.0
+    ports:
+      - 27017:27017
+    networks:
+      - backend
+
+  onlineshopwebui:
+    container_name: onlineshop-webui
+    image: ${DOCKER_REGISTRY-}onlineshopwebui
+    ports:
+      - 5100:80
+    build:
+      context: .
+      dockerfile: src/OnlineShop.WebUI/Dockerfile
+    depends_on:
+      - onlineshopwebapi
+    networks:
+      - backend

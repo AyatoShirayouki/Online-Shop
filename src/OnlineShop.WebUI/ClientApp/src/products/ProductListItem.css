@@ -1,0 +1,23 @@
+.card {
+  width: 20rem;
+  margin: 2rem;
+}
+
+.card img {
+  height: 8rem;
+  object-fit: contain;
+  margin: 1rem;
+}
+
+.card .btn-primary {
+  margin: 1rem;
+}
+
+.card .btn-secondary {
+  margin: 1rem;
+}
+
+.card .button-wrapper {
+  display: flex;
+  justify-content: center;
+}
